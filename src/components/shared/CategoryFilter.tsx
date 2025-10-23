@@ -1,11 +1,11 @@
 /**
  * CategoryFilter Component
  *
- * Modern category filter with checkboxes, search, and collapsible sections
+ * Modern category filter with checkboxes, search, and dropdown menu
  * Features responsive design and smooth animations
  */
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useRef, useEffect } from 'react';
 import type { Category, ModelSummary } from '@/types';
 
 interface CategoryFilterProps {
@@ -25,8 +25,11 @@ export const CategoryFilter = ({
   className = '',
   disabled = false
 }: CategoryFilterProps) => {
-  const [isExpanded, setIsExpanded] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
+  const dropdownRef = useRef<HTMLDivElement>(null);
+  const buttonRef = useRef<HTMLButtonElement>(null);
+  const [dropdownPosition, setDropdownPosition] = useState({ top: 0, left: 0 });
 
   // Calculate model counts per category
   const categoryCounts = useMemo(() => {
@@ -49,6 +52,21 @@ export const CategoryFilter = ({
       category.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
   }, [categories, searchTerm]);
+
+  const handleToggleDropdown = () => {
+    if (disabled) return;
+
+    // Calculate position before opening
+    if (!isOpen && buttonRef.current) {
+      const rect = buttonRef.current.getBoundingClientRect();
+      setDropdownPosition({
+        top: rect.bottom + window.scrollY + 8,
+        left: rect.left + window.scrollX
+      });
+    }
+
+    setIsOpen(!isOpen);
+  };
 
   const handleToggle = (categoryId: string) => {
     if (disabled) return;
@@ -75,61 +93,79 @@ export const CategoryFilter = ({
   const hasActiveFilters = selectedCategoryIds.length > 0;
   const hasSearchResults = filteredCategories.length > 0;
 
+  // Update dropdown position when opening
+  useEffect(() => {
+    if (isOpen && buttonRef.current) {
+      const rect = buttonRef.current.getBoundingClientRect();
+      setDropdownPosition({
+        top: rect.bottom + window.scrollY + 8,
+        left: rect.left + window.scrollX
+      });
+    }
+  }, [isOpen]);
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node) &&
+          buttonRef.current && !buttonRef.current.contains(event.target as Node)) {
+        setIsOpen(false);
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+      return () => document.removeEventListener('mousedown', handleClickOutside);
+    }
+  }, [isOpen]);
+
   if (categories.length === 0) {
     return null;
   }
 
   return (
-    <div className={`card-glass ${className}`}>
-      {/* Header */}
-      <div className="p-4 border-b border-secondary-100">
-        <div className="flex items-center justify-between">
-          <h3 className="font-semibold text-secondary-900 flex items-center space-x-2">
-            <svg className="w-5 h-5 text-primary-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
-            </svg>
-            <span>Categories</span>
-            {hasActiveFilters && (
-              <span className="badge-primary text-xs">{selectedCategoryIds.length}</span>
-            )}
-          </h3>
-
-          <button
-            onClick={() => setIsExpanded(!isExpanded)}
-            className="p-1 rounded-lg text-secondary-400 hover:text-secondary-600 hover:bg-secondary-100 transition-all duration-200"
-            aria-label={isExpanded ? "Collapse categories" : "Expand categories"}
-          >
-            <svg
-              className={`w-5 h-5 transition-transform duration-200 ${isExpanded ? 'rotate-180' : ''}`}
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-            </svg>
-          </button>
-        </div>
-
-        {/* Action Buttons */}
+    <div className={className}>
+      {/* Dropdown Button */}
+      <button
+        ref={buttonRef}
+        type="button"
+        onClick={handleToggleDropdown}
+        disabled={disabled}
+        className={`btn btn-outline flex items-center space-x-2 px-4 py-2 rounded-xl transition-all duration-200 w-full ${
+          isOpen ? 'ring-2 ring-primary-500 border-primary-500' : ''
+        } ${disabled ? 'opacity-50 cursor-not-allowed' : ''}`}
+        aria-label="Filter by categories"
+        aria-expanded={isOpen}
+      >
+        <svg className="w-5 h-5 text-primary-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
+        </svg>
+        <span className="font-medium text-secondary-900">Categories</span>
         {hasActiveFilters && (
-          <div className="flex items-center space-x-2 mt-3">
-            <button
-              onClick={handleClearAll}
-              disabled={disabled}
-              className="btn-ghost text-xs px-2 py-1"
-            >
-              Clear all
-            </button>
-            <div className="text-xs text-secondary-500">
-              {selectedCategoryIds.length} selected
-            </div>
-          </div>
+          <span className="badge-primary text-xs">{selectedCategoryIds.length}</span>
         )}
-      </div>
+        <svg
+          className={`w-4 h-4 text-secondary-400 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+        </svg>
+      </button>
 
-      {/* Content */}
-      {isExpanded && (
-        <div className="p-4 space-y-4">
+      {/* Dropdown Menu - Rendered as Portal with Fixed Positioning */}
+      {isOpen && (
+        <div
+          ref={dropdownRef}
+          className="fixed z-50 w-80 bg-white rounded-xl shadow-large border border-secondary-100 overflow-hidden"
+          style={{
+            top: `${dropdownPosition.top}px`,
+            left: `${dropdownPosition.left}px`,
+            maxHeight: '500px'
+          }}
+        >
+          <div className="p-4 space-y-4">
           {/* Search */}
           {categories.length > 6 && (
             <div className="relative">
@@ -242,6 +278,7 @@ export const CategoryFilter = ({
               </div>
             </div>
           )}
+          </div>
         </div>
       )}
     </div>

@@ -30,6 +30,8 @@ export const SearchBar = ({
   const [localValue, setLocalValue] = useState(value);
   const inputRef = useRef<HTMLInputElement>(null);
   const debounceTimerRef = useRef<number | null>(null);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+  const [dropdownPosition, setDropdownPosition] = useState({ top: 0, left: 0, width: 0 });
 
   // Sync local value with prop value
   useEffect(() => {
@@ -117,14 +119,19 @@ export const SearchBar = ({
   // Close suggestions when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (inputRef.current && !inputRef.current.contains(event.target as Node)) {
+      if (
+        inputRef.current && !inputRef.current.contains(event.target as Node) &&
+        dropdownRef.current && !dropdownRef.current.contains(event.target as Node)
+      ) {
         setShowSuggestions(false);
       }
     };
 
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
+    if (showSuggestions) {
+      document.addEventListener('mousedown', handleClickOutside);
+      return () => document.removeEventListener('mousedown', handleClickOutside);
+    }
+  }, [showSuggestions]);
 
   // Show suggestions when focused and there are suggestions
   useEffect(() => {
@@ -132,6 +139,18 @@ export const SearchBar = ({
       setShowSuggestions(true);
     }
   }, [isFocused, filteredSuggestions.length]);
+
+  // Update dropdown position when opening
+  useEffect(() => {
+    if (showSuggestions && inputRef.current) {
+      const rect = inputRef.current.getBoundingClientRect();
+      setDropdownPosition({
+        top: rect.bottom + window.scrollY + 8,
+        left: rect.left + window.scrollX,
+        width: rect.width
+      });
+    }
+  }, [showSuggestions]);
 
   // Cleanup debounce timer
   useEffect(() => {
@@ -146,7 +165,7 @@ export const SearchBar = ({
     <div className="relative">
       {/* Search Input */}
       <div className="relative">
-        <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
           <svg
             className={`w-5 h-5 transition-colors ${
               isFocused ? 'text-primary-500' : 'text-secondary-400'
@@ -174,7 +193,7 @@ export const SearchBar = ({
           onBlur={() => setIsFocused(false)}
           disabled={disabled}
           placeholder={placeholder}
-          className={`input pl-12 pr-12 h-12 text-lg rounded-xl transition-all duration-200 ${
+          className={`input pl-10 ${localValue ? 'pr-12' : 'pr-20 sm:pr-28'} h-12 text-base rounded-xl transition-all duration-200 ${
             isFocused
               ? 'ring-2 ring-primary-500 ring-offset-2 shadow-medium border-primary-500'
               : 'hover:border-secondary-400'
@@ -221,8 +240,16 @@ export const SearchBar = ({
 
       {/* Suggestions Dropdown */}
       {showSuggestions && filteredSuggestions.length > 0 && (
-        <div className="absolute z-50 w-full mt-2 bg-white rounded-xl shadow-large border border-secondary-100 overflow-hidden">
-          <ul className="py-2" role="listbox">
+        <div
+          ref={dropdownRef}
+          className="fixed z-50 bg-white rounded-xl shadow-large border border-secondary-100 overflow-hidden max-h-96"
+          style={{
+            top: `${dropdownPosition.top}px`,
+            left: `${dropdownPosition.left}px`,
+            width: `${dropdownPosition.width}px`
+          }}
+        >
+          <ul className="py-2 max-h-80 overflow-y-auto" role="listbox">
             {filteredSuggestions.map((suggestion, index) => (
               <li
                 key={suggestion}

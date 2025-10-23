@@ -165,7 +165,7 @@ function HomePage() {
                         setSearchQuery('');
                         setSelectedCategories([]);
                       }}
-                      className="btn-outline text-sm px-4 py-2"
+                      className="btn btn-outline text-sm px-4 py-2"
                     >
                       Clear all filters
                     </button>
