@@ -1,0 +1,63 @@
+{
+  "version": "1.0.0",
+  "lastUpdated": "2025-01-23T00:00:00Z",
+  "categories": [
+    {
+      "id": "beverages",
+      "name": "Beverages",
+      "description": "Drink products and beverage displays"
+    },
+    {
+      "id": "snacks",
+      "name": "Snacks",
+      "description": "Snack and food product displays"
+    },
+    {
+      "id": "personal-care",
+      "name": "Personal Care",
+      "description": "Health and beauty product displays"
+    }
+  ],
+  "models": [
+    {
+      "id": "model-001",
+      "name": "Premium Shelf Display",
+      "code": "PSD-001",
+      "categoryIds": ["beverages"],
+      "thumbnailUrl": "https://placehold.co/400x300/3B82F6/FFFFFF/png?text=Premium+Shelf",
+      "posmCount": 3
+    },
+    {
+      "id": "model-002",
+      "name": "Floor Standing Unit",
+      "code": "FSU-002",
+      "categoryIds": ["snacks"],
+      "thumbnailUrl": "https://placehold.co/400x300/10B981/FFFFFF/png?text=Floor+Unit",
+      "posmCount": 2
+    },
+    {
+      "id": "model-003",
+      "name": "Counter Top Display",
+      "code": "CTD-003",
+      "categoryIds": ["personal-care", "snacks"],
+      "thumbnailUrl": "https://placehold.co/400x300/F59E0B/FFFFFF/png?text=Counter+Top",
+      "posmCount": 4
+    },
+    {
+      "id": "model-004",
+      "name": "End Cap Display",
+      "code": "ECD-004",
+      "categoryIds": ["beverages", "snacks"],
+      "thumbnailUrl": "https://placehold.co/400x300/EF4444/FFFFFF/png?text=End+Cap",
+      "posmCount": 2
+    },
+    {
+      "id": "model-005",
+      "name": "Refrigerated Display",
+      "code": "RFD-005",
+      "categoryIds": ["beverages"],
+      "thumbnailUrl": "https://placehold.co/400x300/8B5CF6/FFFFFF/png?text=Refrigerated",
+      "posmCount": 5
+    }
+  ]
+}

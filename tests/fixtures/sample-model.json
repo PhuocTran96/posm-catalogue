@@ -1,0 +1,49 @@
+{
+  "id": "model-001",
+  "name": "Shelf Display Model A",
+  "code": "SD-A-001",
+  "description": "Standard retail shelf display with multiple POSM placement points",
+  "categoryIds": ["retail-fixtures"],
+  "image": {
+    "url": "/images/models/model-001.webp",
+    "width": 1920,
+    "height": 1080,
+    "alt": "Shelf Display Model A showing multiple product placement areas",
+    "format": "webp"
+  },
+  "posmMarkers": [
+    {
+      "id": "marker-001",
+      "position": { "x": 25.5, "y": 30.2 },
+      "info": {
+        "name": "Shelf Talker - Brand A",
+        "description": "Shelf-mounted promotional sign highlighting Brand A products",
+        "artworkUrl": "/images/posm/shelf-talker-brand-a.webp"
+      }
+    },
+    {
+      "id": "marker-002",
+      "position": { "x": 65.0, "y": 45.5 },
+      "info": {
+        "name": "Product Wobbler",
+        "description": "Eye-catching wobbler display for featured products",
+        "artworkUrl": "/images/posm/wobbler-promo.webp"
+      }
+    },
+    {
+      "id": "marker-003",
+      "position": { "x": 80.0, "y": 20.0 },
+      "info": {
+        "name": "Price Card Holder",
+        "description": "Clear acrylic price card holder with product information",
+        "artworkUrl": "/images/posm/price-card.webp"
+      }
+    }
+  ],
+  "metadata": {
+    "createdAt": "2025-10-20T14:00:00Z",
+    "updatedAt": "2025-10-23T10:30:00Z",
+    "version": "1.0.0",
+    "author": "admin@company.com"
+  }
+}

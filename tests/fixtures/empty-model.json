@@ -1,0 +1,20 @@
+{
+  "id": "model-003",
+  "name": "Empty Display Model",
+  "code": "ED-003",
+  "description": "New model without POSM markers configured yet",
+  "categoryIds": ["retail-fixtures"],
+  "image": {
+    "url": "/images/models/model-003.webp",
+    "width": 1920,
+    "height": 1080,
+    "alt": "Empty display model awaiting POSM configuration",
+    "format": "webp"
+  },
+  "posmMarkers": [],
+  "metadata": {
+    "createdAt": "2025-10-23T10:00:00Z",
+    "updatedAt": "2025-10-23T10:00:00Z",
+    "version": "1.0.0"
+  }
+}

@@ -1,0 +1,73 @@
+{
+  "id": "model-001",
+  "name": "Premium Shelf Display",
+  "code": "PSD-001",
+  "description": "A premium shelf display unit designed for beverage products. Features multiple levels and adjustable shelving.",
+  "categoryIds": ["beverages"],
+  "image": {
+    "url": "https://placehold.co/1920x1080/3B82F6/FFFFFF/png?text=Premium+Shelf+Display",
+    "width": 1920,
+    "height": 1080,
+    "format": "jpg",
+    "alt": "Premium shelf display for beverages"
+  },
+  "posmMarkers": [
+    {
+      "id": "marker-001",
+      "position": {
+        "x": 400,
+        "y": 300
+      },
+      "info": {
+        "title": "Top Shelf Banner",
+        "description": "Main branding area at eye level",
+        "dimensions": {
+          "width": 120,
+          "height": 30,
+          "depth": 5,
+          "unit": "cm"
+        },
+        "material": "PVC",
+        "notes": "High visibility position"
+      }
+    },
+    {
+      "id": "marker-002",
+      "position": {
+        "x": 700,
+        "y": 500
+      },
+      "info": {
+        "title": "Product Shelf",
+        "description": "Main product display area",
+        "dimensions": {
+          "width": 150,
+          "height": 40,
+          "depth": 35,
+          "unit": "cm"
+        },
+        "material": "Metal",
+        "notes": "Weight capacity: 50kg"
+      }
+    },
+    {
+      "id": "marker-003",
+      "position": {
+        "x": 1200,
+        "y": 800
+      },
+      "info": {
+        "title": "Base Wobbler",
+        "description": "Promotional wobbler at base level",
+        "dimensions": {
+          "width": 20,
+          "height": 25,
+          "depth": 2,
+          "unit": "cm"
+        },
+        "material": "Cardboard",
+        "notes": "Replaceable promotional material"
+      }
+    }
+  ]
+}

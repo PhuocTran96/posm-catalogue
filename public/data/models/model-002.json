@@ -1,0 +1,47 @@
+{
+  "id": "model-002",
+  "name": "Endcap Display Model B",
+  "code": "ED-B-002",
+  "description": "Premium endcap display unit designed for high-traffic areas. Maximum brand visibility with integrated POSM solutions.",
+  "categoryIds": ["retail-fixtures", "promotional"],
+  "image": {
+    "url": "/images/models/model-002.jpg",
+    "width": 1920,
+    "height": 1080,
+    "alt": "Endcap Display Model B with promotional POSM placements",
+    "format": "jpeg"
+  },
+  "posmMarkers": [
+    {
+      "id": "marker-001",
+      "position": { "x": 50.0, "y": 15.0 },
+      "info": {
+        "name": "Header Card",
+        "description": "Large format header card for brand messaging. Mounted at top of endcap for maximum visibility.",
+        "artworkUrl": "/images/posm/placeholder-artwork.jpg",
+        "dimensions": {
+          "width": 60,
+          "height": 40,
+          "unit": "cm"
+        },
+        "materialType": "Foam Board",
+        "notes": "Updated quarterly with seasonal promotions"
+      }
+    },
+    {
+      "id": "marker-002",
+      "position": { "x": 50.0, "y": 70.0 },
+      "info": {
+        "name": "Floor Decal",
+        "description": "Eye-catching floor decal to draw customer attention to the display.",
+        "artworkUrl": "/images/posm/placeholder-artwork.jpg"
+      }
+    }
+  ],
+  "metadata": {
+    "createdAt": "2025-10-21T09:00:00Z",
+    "updatedAt": "2025-10-23T10:30:00Z",
+    "version": "1.0.0",
+    "author": "admin@company.com"
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "version": "1.0.0",
+  "lastUpdated": "2025-10-23T10:30:00Z",
+  "totalModels": 3,
+  "categories": [
+    {
+      "id": "retail-fixtures",
+      "name": "Retail Fixtures",
+      "description": "Point-of-sale display fixtures and shelving"
+    },
+    {
+      "id": "promotional",
+      "name": "Promotional Materials",
+      "description": "Temporary promotional displays and signage"
+    }
+  ],
+  "models": [
+    {
+      "id": "model-001",
+      "name": "Shelf Display Model A",
+      "code": "SD-A-001",
+      "thumbnailUrl": "/images/models/model-001-thumb.webp",
+      "categoryIds": ["retail-fixtures"],
+      "posmCount": 3,
+      "dataUrl": "/data/models/model-001.json"
+    },
+    {
+      "id": "model-002",
+      "name": "Endcap Display Model B",
+      "code": "ED-B-002",
+      "thumbnailUrl": "/images/models/model-002-thumb.webp",
+      "categoryIds": ["retail-fixtures", "promotional"],
+      "posmCount": 2,
+      "dataUrl": "/data/models/model-002.json"
+    },
+    {
+      "id": "model-003",
+      "name": "Empty Display Model",
+      "code": "ED-003",
+      "thumbnailUrl": "/images/models/model-003-thumb.webp",
+      "categoryIds": ["retail-fixtures"],
+      "posmCount": 0,
+      "dataUrl": "/data/models/model-003.json"
+    }
+  ]
+}
